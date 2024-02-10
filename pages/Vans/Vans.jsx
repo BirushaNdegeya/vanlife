@@ -4,8 +4,8 @@ import { Link, useSearchParams } from "react-router-dom"
 const Vans = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    console.log(searchParams.get('type'));
-    console.log(searchParams.get('price'));
+    const typeFilter = searchParams.get('type');
+    console.log(typeFilter);
 
     const [vans, setVans] = useState([])
     React.useEffect(() => {
