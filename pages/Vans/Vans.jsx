@@ -1,8 +1,13 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useState} from "react"
+import { Link, useSearchParams } from "react-router-dom"
 
-export default function Vans() {
-    const [vans, setVans] = React.useState([])
+const Vans = () => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    console.log(searchParams.get('type'));
+    console.log(searchParams.get('price'));
+
+    const [vans, setVans] = useState([])
     React.useEffect(() => {
         fetch("/api/vans")
             .then(res => res.json())
@@ -29,5 +34,7 @@ export default function Vans() {
                 {vanElements}
             </div>
         </div>
-    )
-}
+    );
+};
+
+export default Vans;
