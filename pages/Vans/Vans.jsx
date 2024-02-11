@@ -5,16 +5,20 @@ const Vans = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const typeFilter = searchParams.get('type');
-    console.log(typeFilter);
 
     const [vans, setVans] = useState([])
     React.useEffect(() => {
         fetch("/api/vans")
             .then(res => res.json())
             .then(data => setVans(data.vans))
-    }, [])
+    }, []);
 
-    const vanElements = vans.map(van => (
+    const displayedVans = typeFilter ?
+        vans.filter((van) => van.type.toLowerCase() === typeFilter)
+        : vans;
+
+
+    const vanElements = displayedVans.map(van => (
         <div key={van.id} className="van-tile">
             <Link to={`/vans/${van.id}`}>
                 <img src={van.imageUrl} />
@@ -25,7 +29,20 @@ const Vans = () => {
                 <i className={`van-type ${van.type} selected`}>{van.type}</i>
             </Link>
         </div>
-    ))
+    ));
+
+        /**
+     * Challenge: add links to filter the vans by type. Use a hard-coded
+     * `to` string like we just practiced. The types are "simple", 
+     * "luxury", and "rugged".
+     * 
+     * For now, give the Links a className of `van-type simple` (and
+     * manually replace "simple" with "luxury" and "rugged" for 
+     * the Links that filter by those types.)
+     * 
+     * Include a Link to clear the filters. Its className should be
+     * `van-type clear-filters`
+     */
 
     return (
         <div className="van-list-container">
