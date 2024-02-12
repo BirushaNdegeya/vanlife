@@ -1,5 +1,5 @@
 import React from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link, useLocation } from "react-router-dom"
 
 export default function VanDetail() {
     const params = useParams()
@@ -9,12 +9,15 @@ export default function VanDetail() {
         fetch(`/api/vans/${params.id}`)
             .then(res => res.json())
             .then(data => setVan(data.vans))
-    }, [params.id])
+    }, [params.id]);
 
+    const location = useLocation();
+
+    const search = location.state?.search || "";
     return (
         <div className="van-detail-container">
             <Link
-                to=".."
+                to={`../${search}`}
                 relative="path"
                 className="back-button"
             >&larr; <span>Back to all vans</span></Link>
@@ -31,5 +34,5 @@ export default function VanDetail() {
                 </div>
             ) : <h2>Loading...</h2>}
         </div>
-    )
-}
+    );
+};
